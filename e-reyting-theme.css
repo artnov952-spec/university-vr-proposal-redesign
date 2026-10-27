@@ -1,0 +1,33 @@
+/* Scoped adaptation of the owner's E-reyting kit, not its static HTML demo. */
+@font-face{font-family:UniversityUI;src:url('./assets/e-reyting-fonts/Inter-400.ttf');font-weight:400;font-display:swap}
+@font-face{font-family:UniversityUI;src:url('./assets/e-reyting-fonts/Inter-500.ttf');font-weight:500;font-display:swap}
+@font-face{font-family:UniversityUI;src:url('./assets/e-reyting-fonts/Inter-600.ttf');font-weight:600;font-display:swap}
+@font-face{font-family:UniversityUI;src:url('./assets/e-reyting-fonts/Inter-700.ttf');font-weight:700;font-display:swap}
+@font-face{font-family:UniversityNumbers;src:url('./assets/e-reyting-fonts/DejaVuSansMono.ttf');font-weight:400;font-display:swap}
+@font-face{font-family:UniversityNumbers;src:url('./assets/e-reyting-fonts/DejaVuSansMono-Bold.ttf');font-weight:700;font-display:swap}
+html [data-vr-workspace],html[data-theme=dark] [data-vr-workspace]{
+  font-family:UniversityUI,Golos,sans-serif;
+  --ws-sh-1:none;--ws-t-fast:140ms;
+  --ws-r-control:6px;--ws-r-sm:8px;--ws-r-md:12px;--ws-r-lg:14px;
+  --ws-select-arrow:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='m1 1 5 5 5-5' fill='none' stroke='%23716662' stroke-width='1.5'/%3E%3C/svg%3E");
+  --ws-disabled-bg:#eee9e6;--ws-disabled-text:#69615d;--ws-disabled-line:#b5aca8;
+  --ws-ok-bg:#eaf4ef;--ws-ok-text:#0f6b43;--ws-ok-line:#91b7a2;
+  --ws-bad-bg:#fbeceb;--ws-bad-text:#a92019;
+  --ws-backdrop:#15100fe0;
+}
+html[data-theme=dark] [data-vr-workspace]{--ws-disabled-bg:#302622;--ws-disabled-text:#bfb1ab;--ws-disabled-line:#79675f;--ws-ok-bg:#14261d;--ws-ok-text:#79d3a7;--ws-ok-line:#496c57;--ws-bad-bg:#2c1614;--ws-bad-text:#f08b84}
+[data-vr-workspace] .ws-nav-link{border-left:3px solid transparent}
+[data-vr-workspace] .ws-nav-link.is-active{border-left-color:var(--ws-accent);color:var(--ws-accent);font-weight:600}
+[data-vr-workspace] .ws-brand{border-bottom:1px solid var(--ws-line);padding-bottom:20px}
+[data-vr-workspace] :is(.ws-stats strong,time,.ws-point-number,.ws-trend strong,.ws-payload){font-family:UniversityNumbers,monospace;font-variant-numeric:tabular-nums}
+[data-vr-workspace] .ws-table th{font-size:11px;font-weight:600;letter-spacing:.025em}
+[data-vr-workspace] .ws-panel{box-shadow:none}
+[data-vr-workspace] .ws-stats{border:1px solid var(--ws-line);border-radius:12px;background:var(--ws-white);overflow:hidden}
+[data-vr-workspace] .ws-stats>div{border:0;border-right:1px solid var(--ws-line);border-radius:0;background:transparent}
+[data-vr-workspace] .ws-stats>div:last-child{border-right:0}
+[data-vr-workspace] .ws-trend meter::-webkit-meter-optimum-value{background:var(--ws-accent)}
+.demo-screen{font-family:UniversityUI,Golos,sans-serif;box-shadow:none}
+.demo-screen :is(.demo-score strong,.demo-review-head>b,.demo-readiness>b,time,.demo-log-index){font-family:UniversityNumbers,monospace}
+.demo-scene-task,.demo-scene-label,.demo-observer{background:#4d0101ed}
+.demo-thumb>span{background:linear-gradient(transparent,#340100ed)}
+.demo-observer>span:last-child{color:#f2dbd9}

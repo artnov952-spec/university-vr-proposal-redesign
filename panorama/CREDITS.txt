@@ -1,0 +1,15 @@
+Panoramic CG concept images: generated for this presentation with built-in ImageGen, 2026-10-26; all five re-rendered with built-in ImageGen, 2026-10-27.
+The owner's equipment proposal pages 15-17 were used as quality/style references, not as downloadable website slides.
+Images are illustrative CG, not photographs, measured reconstructions or a supplied VR application.
+Active revision: courtyard, entrance and market r6, traffic r10, classroom r13; lossless native 1774 x 887 PNGs, no resizing, post-sharpening or upscaling.
+Classroom r13: ten desk-based VR workstations, teacher workstation and shared front screen. Separate practice mat and storage/charging cabinet removed with built-in ImageGen, 2026-10-27.
+Earlier JPEGs are retained, not used by the active proposal, inline demo or viewer.
+The remake improves materials, geometry, light and clarity; it does not claim a higher pixel count.
+The viewer uses a bounded 180-degree panorama. Seamless 360-degree capture is not claimed.
+
+Three.js 0.186.1, MIT License.
+https://github.com/mrdoob/three.js
+License included at ../scene3d/vendor/LICENSE.
+
+Golos Text, SIL Open Font License.
+License included at ../assets/fonts/Golos-OFL.txt.

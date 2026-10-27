@@ -1,0 +1,18 @@
+Integrated educational CG scene frames, 2026-10-27.
+
+20 fictional scenarios, five whole-frame checkpoint renders per scenario.
+Generated with the built-in ImageGen tool from the project's own original
+CG environments. No paid external API, photographic cutouts, sprite atlases,
+independent person/prop scaling or third-party map imagery is used here.
+
+Art direction: fixed wide 2:1 camera, preserve architecture and perspective,
+natural human/vehicle sizes, grounded contacts, consistent light and shadows.
+Native images: 1774 x 887 pixels. Web copies: JPEG quality 95, no upscaling.
+Original native PNG outputs are retained in the owner's local generation files.
+The road base has a straight crossing perpendicular to the roadway.
+
+Content and people are fictional educational concepts for an Uzbekistan
+university proposal, not official procedures, incident records or real people.
+Checkpoint states may vary in pose and details. These are not a continuous
+3D simulation, measured reconstruction, headset telemetry or a training rubric
+approved by the university. Final methodology requires university approval.

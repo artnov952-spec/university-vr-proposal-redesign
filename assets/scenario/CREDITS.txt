@@ -1,0 +1,55 @@
+Scenario CG sprites, 2026-10-27
+Generated with the built-in OpenAI ImageGen tool for this educational proposal.
+Fictional people. No real personal photographs, client correspondence or source PDF files were submitted.
+Four original RGBA PNG texture atlases, 1774 x 887 pixels, 4 columns x 2 rows.
+No enlargement or replacement of the base panorama originals.
+
+Prompt set / production specification:
+All atlases: realistic high-detail architectural CG rendering; exact equal 4-by-2 texture grid;
+isolated complete objects; neutral three-quarter view; daylight from upper left;
+transparent background (solid magenta key requested only as an unavailable-alpha reserve);
+no words, cell labels, borders, logos, weapons or graphic injuries.
+
+people-r8.png, cells left-to-right, row-by-row:
+1. Uzbek male event organizer in beige shirt, open-hand conversation pose.
+2. Adult man seated in complete manual wheelchair.
+3. Mother in modest everyday clothing pushing complete baby stroller.
+4. Elderly man with cane and dark traditional skullcap.
+5. Municipal maintenance worker in navy workwear holding clipboard.
+6. Woman in modest blue clothing, calm conversation pose.
+7. Child in yellow top with fruit-market seller in apron.
+8. Administrator in white shirt holding a phone.
+
+outdoor-r8.png:
+1. Long folding banquet table with cream tablecloth and visible legs.
+2. Coiled green watering hose extended across a walking path.
+3. Two orange cones joined by red-white warning bar.
+4. Temporary wooden footbridge planks, one tilted.
+5. Freestanding ventilation fan with circular grille.
+6. Freestanding blank wooden noticeboard.
+7. Blue water containers with low tap stand.
+8. Maintenance handcart with cleaning tools.
+
+interior-r8.png:
+1. Closed gray electrical cabinet, intact and without fire.
+2. Closed silver elevator doors with narrow frame.
+3. Upright wardrobe with moving boxes.
+4. Compact wall intercom.
+5. Wet-floor sign beside narrow threshold.
+6. Broken display glass fragments and small puddle.
+7. Market worker pushing hand trolley with boxes.
+8. Tired seated adult with woman companion, no medical procedure.
+
+traffic-r8.png:
+1. White compact delivery van, no readable plate or logo.
+2. Small blank dark advertising A-frame.
+3. Traffic signal pole with all lights off.
+4. White city bus with blue lower band, no readable route text.
+5. Father holding school-age child's hand on sidewalk.
+6. Gray compact car with raised hood.
+7. Two complete cars after minor parking contact, no dramatic damage.
+8. Four pedestrians in calm boarding queue.
+
+Runtime effects and scene states are implemented in scenario-visuals.js and scenario-visuals.css.
+They illustrate checkpoints, not autonomous agents, legal procedure or verified VR telemetry.
+Scenario snapshots with modified or legacy checkpoint contracts do not receive unrelated visual effects.

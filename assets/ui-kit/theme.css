@@ -1,0 +1,25 @@
+/* Тема проекта. Единственный файл, где меняются цвета. Подключается после kit.css. */
+:root{
+  --accent-h: 240;        /* оттенок акцента 1 (0-360, шкала oklch) */
+  --accent-h2: 200;       /* оттенок акцента 2; равен первому = сплошной цвет без градиента */
+  --accent-c: .10;        /* насыщенность: 0 серый, .06-.11 пастель, .16+ яркий */
+  --accent-l: .80;        /* светлота: .78-.86 пастель, .3-.5 темный акцент */
+  --accent-angle: 120deg; /* угол градиента */
+  --neutral-h: 75;        /* подтон серых: 75 теплый, 255 холодный */
+  --neutral-c: .005;      /* сила подтона серых */
+  /* --on-accent: oklch(.99 0 0);  раскомментировать при темном акценте (светлота ниже .62) */
+}
+
+/* Сайдбар. По умолчанию светлый. Для другого варианта раскомментируйте один блок. */
+
+/* тон акцента
+.side{--side-bg:linear-gradient(180deg,var(--accent-soft),var(--accent-soft-2))}
+*/
+
+/* залит акцентом
+.side{--side-bg:linear-gradient(180deg,var(--accent),var(--accent-2));--side-text:oklch(.22 .02 var(--accent-h));--side-text-2:oklch(.3 .03 var(--accent-h));--side-muted:oklch(.38 .04 var(--accent-h));--side-hover:oklch(1 0 0/.35);--side-active:oklch(1 0 0/.75);--side-on-active:oklch(.22 .02 var(--accent-h));--side-line:transparent}
+*/
+
+/* темный
+.side{--side-bg:linear-gradient(180deg,oklch(.24 .012 var(--accent-h)),oklch(.17 .012 var(--accent-h)));--side-text:oklch(.97 0 0);--side-text-2:oklch(.82 .008 var(--accent-h));--side-muted:oklch(.62 .01 var(--accent-h));--side-hover:oklch(1 0 0/.08);--side-line:transparent}
+*/

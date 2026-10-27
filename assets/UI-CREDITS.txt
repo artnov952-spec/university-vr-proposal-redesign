@@ -1,0 +1,33 @@
+UI source and attribution, 2026-10-26
+
+Cloudplus UI Pack supplied by the owner: cloudplus-ui-pack.zip.
+The original erp-kit-clean/css/kit.css is included unchanged in ui-kit/.
+Buttons, semantic tokens, radii, focus and transition timings are used by
+the proposal. Project colors are overridden in proposal-theme.css.
+The generic kit.js demo event handlers are intentionally not loaded:
+the proposal and working stand have their own stateful behavior.
+
+SVG icon sprite and individual icons are from the supplied pack.
+Lucide license is included in ui-icons/LICENSE.
+Upstream: https://github.com/lucide-icons/lucide
+Geist and Geist Mono fonts are from the supplied pack, see ui-kit/fonts/LICENSE.
+Upstream: https://github.com/vercel/geist-font
+Golos Text fonts and their OFL notices are retained in assets/fonts/.
+
+Client emblem: https://mgjxu.uz/assets/public/images/logos.png
+Used from the client's official website for this demonstration proposal.
+It is not a new brand mark or a claim of official endorsement.
+
+Lighthouse was studied as an interaction/storytelling reference only.
+Its photographs, copy and brand artwork are not included.
+
+E-reyting visual kit supplied by the owner on 2026-10-26: e-reyting-kit.zip.
+Its burgundy palette, hairline data tables, active navigation rail, compact
+status patterns, 140ms timing and numeric typography are adapted in
+proposal-theme.css and e-reyting-theme.css. Inter and DejaVu Sans Mono font
+files are included from that pack in e-reyting-fonts/. The original kit
+is retained outside deployment. Its static example people, departments,
+points, deadlines and approval statements are not copied into this demo.
+Rounded corners intentionally remain softer than the kit's 4/8px baseline
+to preserve the owner's earlier explicit request. No generic demo script
+from either supplied kit is executed.

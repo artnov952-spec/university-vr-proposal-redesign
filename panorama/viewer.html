@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title data-i18n="title">Панорамная CG-концепция | Учебные пространства</title>
+  <script>const q=new URLSearchParams(location.search);if(q.get('embed')==='1')document.documentElement.classList.add('is-embed');document.documentElement.dataset.theme='light';document.documentElement.style.colorScheme='light';document.documentElement.lang=q.get('lang')==='uz'?'uz':'ru';if(document.documentElement.lang==='uz'){document.documentElement.classList.add('is-localizing');document.title="Panoramali CG-konsepsiya | O'quv makonlari";}</script>
+  <link rel="stylesheet" href="./panorama.css?v=sales20261027-r7local">
+  <script type="importmap">{"imports":{"three":"../scene3d/vendor/three.module.js"}}</script>
+  <script type="module" src="./viewer.js?v=sales20261027-r7local"></script>
+</head>
+<body>
+  <main class="panorama-app" id="panorama-app">
+    <header class="viewer-header">
+      <div><p class="eyebrow" data-i18n="spaces">УЧЕБНЫЕ ПРОСТРАНСТВА</p><h1 data-i18n="overview">Панорамный обзор</h1></div>
+      <p class="header-note"><span data-i18n="concept">CG-концепция</span><br><span data-i18n="onePoint">Одна точка наблюдения</span></p>
+    </header>
+    <section class="viewport" id="viewport" data-i18n-aria-label="viewport" aria-label="Панорамная CG-концепция">
+      <canvas id="panorama-canvas" tabindex="0" data-i18n-aria-label="canvasHint" aria-label="Обзор панорамы: перетащите изображение или используйте стрелки" aria-describedby="view-help quality-note"></canvas>
+      <div id="hotspots" class="hotspots" data-i18n-aria-label="hotspots" aria-label="Точки перехода"></div>
+      <div class="view-label"><span class="live-dot" aria-hidden="true"></span><span id="current-label"></span><span class="angle-label" id="angle-label">180° CG</span></div>
+      <div class="load-status" id="load-panel" role="status" aria-live="polite">
+        <p id="load-message" data-i18n="preparing">Подготовка панорамы...</p><button id="retry" type="button" data-i18n="retry" hidden>Повторить загрузку</button>
+      </div>
+      <p class="view-help" id="view-help" data-i18n="viewHelp">Перетащите для осмотра. Стрелки: обзор, + и −: масштаб.</p>
+    </section>
+    <div class="viewer-controls" role="group" data-i18n-aria-label="controls" aria-label="Управление панорамой">
+      <div class="zoom-controls"><button id="zoom-out" type="button" data-i18n-aria-label="zoomOut" aria-label="Уменьшить масштаб">−</button><output id="zoom-label" aria-live="off">1.0×</output><button id="zoom-in" type="button" data-i18n-aria-label="zoomIn" aria-label="Увеличить масштаб">+</button></div>
+      <button id="reset" type="button" data-i18n="reset">Сбросить вид</button>
+      <button id="auto" type="button" data-i18n="auto" aria-pressed="false">Автообзор</button>
+      <button id="fullscreen" type="button" data-i18n="fullscreen" aria-pressed="false">На весь экран</button>
+      <span class="native-size" id="native-size" data-i18n="waitingImage">Изображение ожидается</span>
+      <p class="quality-note" id="quality-note" data-i18n="panoramaQuality">Панорама показывает увеличенный фрагмент исходника. Приближение не добавляет деталей.</p>
+    </div>
+    <nav id="scene-gallery" class="scene-gallery" data-i18n-aria-label="gallery" aria-label="Учебные панорамы"></nav>
+    <footer class="viewer-footer">
+      <p data-i18n="footer">Панорамная CG-концепция · обзор из одной точки</p>
+      <p id="asset-note" data-i18n="preliminary" role="status">Привязка точек перехода предварительная.</p>
+      <p id="scenario-note" role="status" hidden></p>
+    </footer>
+    <p id="announcement" class="sr-only" role="status" aria-live="polite"></p>
+    <dialog id="teaching-info" class="info-panel" aria-labelledby="info-title" aria-describedby="info-summary">
+      <div class="info-heading"><div><p class="eyebrow" data-i18n="teacher">ЗОНА ПРЕПОДАВАТЕЛЯ</p><h2 id="info-title" data-i18n="infoTitle">Управление занятием</h2></div><button id="info-close" class="info-close" type="button" data-i18n="close" data-i18n-aria-label="closeInfo" autofocus aria-label="Закрыть информацию о занятии">Закрыть</button></div>
+      <p id="info-summary" data-i18n="infoSummary">Преподаватель задает учебную задачу, наблюдает за работой и проводит разбор.</p>
+      <dl class="info-stages">
+        <div><dt data-i18n="assignment">Назначение</dt><dd data-i18n="assignmentBody">Выбрать среду, учебную задачу и критерии наблюдения перед началом занятия.</dd></div>
+        <div><dt data-i18n="observation">Наблюдение</dt><dd data-i18n="observationBody">Следить за ходом выполнения и отмечать значимые действия в учебном журнале.</dd></div>
+        <div><dt data-i18n="review">Разбор</dt><dd data-i18n="reviewBody">Обсудить результаты, сопоставить действия с критериями и назначить повторную попытку при необходимости.</dd></div>
+      </dl>
+      <p class="info-note" data-i18n="infoNote">Это описание учебного процесса. Панорама не подключена к реальному занятию.</p>
+      <button id="open-module" class="info-action" type="button" data-i18n="openModule">Показать управление занятием</button>
+      <p id="module-status" class="module-status" role="status" aria-live="polite"></p>
+    </dialog>
+  </main>
+</body>
+</html>
