@@ -66,7 +66,7 @@ export function mountSalesHero(root, language = 'ru') {
   function preload() {
     if (loading) return loading;
     loading = Promise.all(frames.map(frame => new Promise((resolve, reject) => {
-      const image = new Image(); image.decoding = 'async';
+      const image = new Image(); image.decoding = 'async'; image.fetchPriority = 'low';
       const finish = error => { clearTimeout(timeout); image.onload = image.onerror = null; listener.signal.removeEventListener('abort', abort); error ? reject(error) : resolve(image); };
       const abort = () => { image.removeAttribute('src'); finish(new DOMException('Aborted', 'AbortError')); };
       const timeout = setTimeout(() => finish(new Error('Preview image timeout')), 15000);

@@ -66,6 +66,7 @@ button,input,select,textarea { font:inherit; }
 .sales-header .navigation a { min-height:var(--rd-touch); display:inline-flex; align-items:center; justify-content:center; font-size:var(--rd-small); padding:var(--rd-s2) var(--rd-s3); border-radius:var(--rd-r1); }
 .sales-header .navigation a.active { background:var(--rd-soft); color:var(--rd-accent); font-weight:var(--rd-medium); }
 .btn,.text-button { min-height:var(--rd-touch); font-size:var(--rd-body); transition:background var(--rd-time) var(--rd-ease),border-color var(--rd-time) var(--rd-ease),box-shadow var(--rd-time) var(--rd-ease); }
+.sales-main :is(.role-tabs,.exchange-tabs) button { min-height:var(--rd-touch); min-width:var(--rd-touch); }
 .btn { border-radius:var(--rd-r2); padding:var(--rd-s3) var(--rd-s5); }
 .btn--primary { color:var(--rd-white); background:var(--rd-accent); border-color:var(--rd-accent); }
 .btn--primary:hover:not(:disabled) { background:var(--rd-accent-hover); border-color:var(--rd-accent-hover); }

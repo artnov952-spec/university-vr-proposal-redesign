@@ -60,7 +60,7 @@ function frameImage(frame) {
 }
 export function prefetchScenarioFrame(value) {
   const visual=scenarioVisualState(value);
-  if(!visual || typeof Image==='undefined')return;
+  if(!visual || !visual.step || typeof Image==='undefined')return;
   // Only the current and next checkpoint, never all 100 illustrations.
   if(visual.step)frameImage(visual.frame).catch(()=>{});
   if(visual.step<5)frameImage(SCENARIO_FRAMES[visual.caseId][visual.step]).catch(()=>{});
