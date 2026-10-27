@@ -36,7 +36,7 @@ export function renderVisualStatus(value,language='ru') {
   if(!visual)return '';
   const uz=language==='uz';
   const caption=visual.step?visual.item.points[visual.step-1][uz?'uzTitle':'title']:uz?'Vaziyat ochildi. Birinchi amalni tanlang.':'Ситуация загружена. Выберите первое действие.';
-  return `<div class="scenario-visual-status" role="status"><b>${uz?'Amallar':'Действия'} ${visual.step}/5</b><span>${escape(caption)}${visual.pending?`<small>${uz?'Oldingi nazorat nuqtasi qayd etilmaguncha oqibat ko‘rsatilmaydi.':'Последствие ожидает предыдущую контрольную точку.'}</small>`:''}</span></div>`;
+  return `<div class="scenario-visual-status" role="status" style="--action-progress:${visual.step/5}"><b>${uz?'Amallar':'Действия'} ${visual.step}/5</b><span>${escape(caption)}${visual.pending?`<small>${uz?'Oldingi nazorat nuqtasi qayd etilmaguncha oqibat ko‘rsatilmaydi.':'Последствие ожидает предыдущую контрольную точку.'}</small>`:''}</span></div>`;
 }
 export function renderScenarioVisual(value,language='ru') {
   const visual=scenarioVisualState(value);

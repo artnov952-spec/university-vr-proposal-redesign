@@ -8,7 +8,7 @@ export const heroFrameAt = elapsed => {
 };
 export const heroCanRun = ({ playing, ready, hidden, onscreen, suspended, reduced }) => Boolean(playing && ready && !hidden && onscreen && !suspended && !reduced);
 
-export function mountSalesHero(root, language = 'ru') {
+export function mountSalesHero(root, language = 'ru', options = {}) {
   if (!root) return null;
   const t = (ru, uz) => language === 'uz' ? uz : ru;
   const item = scenarioLibrary.find(entry => entry.id === 'entrance-01');
@@ -19,6 +19,7 @@ export function mountSalesHero(root, language = 'ru') {
   const listener = new AbortController(), reasons = new Set();
   let elapsed = 0, playing = false, ready = false, onscreen = false, started = false;
   let disposed = false, animation = 0, lastStamp = null, activeLayer = 0, painted = 0, loading;
+  let lastCaption = '';
   const local = (entry, field) => entry[language === 'uz' ? 'uz' + field[0].toUpperCase() + field.slice(1) : field];
   const canRun = () => heroCanRun({ playing, ready, hidden: document.hidden, onscreen, suspended: reasons.size > 0, reduced: media.matches });
 
@@ -42,9 +43,14 @@ export function mountSalesHero(root, language = 'ru') {
       find('hero-film-count').textContent = frame.complete ? '100 / 100' : `${started ? frame.index + 1 : 0} / 5`;
       find('hero-film-caption').textContent = frame.complete ? t('Каждое действие можно разобрать.', 'Har bir amalni tahlil qilish mumkin.') : started ? local(item.points[frame.index], 'title') : local(item, 'title');
       find('hero-film-detail').textContent = frame.complete ? t('Пять действий зафиксированы. Преподаватель видит, как получен результат.', 'Beshta amal qayd etildi. O‘qituvchi natija qanday olinganini ko‘radi.') : started ? local(item.points[frame.index], 'description') : t('Увидеть. Выбрать действие. Разобрать результат.', 'Ko‘rish. Amalni tanlash. Natijani tahlil qilish.');
+      const captionKey = `${started}:${frame.index}:${frame.complete}`;
+      if (lastCaption && lastCaption !== captionKey) options.onFrameChange?.();
+      lastCaption = captionKey;
     }
     find('hero-play').setAttribute('aria-pressed', String(playing));
-    find('hero-play').querySelector('span').textContent = media.matches ? t('Следующий кадр', 'Keyingi kadr') : playing ? t('Приостановить', 'To‘xtatish') : frame.complete ? t('Смотреть еще раз', 'Yana ko‘rish') : started ? t('Продолжить показ', 'Namoyishni davom ettirish') : t('Смотреть 10 секунд', '10 soniya ko‘rish');
+    const playText = media.matches ? t('Следующий кадр', 'Keyingi kadr') : playing ? t('Приостановить', 'To‘xtatish') : frame.complete ? t('Смотреть еще раз', 'Yana ko‘rish') : started ? t('Продолжить показ', 'Namoyishni davom ettirish') : t('Смотреть 10 секунд', '10 soniya ko‘rish');
+    const playLabel = find('hero-play').querySelector('span');
+    if (playLabel.textContent !== playText) playLabel.textContent = playText;
   }
   function tick(stamp) {
     animation = 0;

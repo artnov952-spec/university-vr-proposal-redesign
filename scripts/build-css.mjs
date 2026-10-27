@@ -1,5 +1,5 @@
 import { readFile, writeFile } from 'node:fs/promises';
-const files = ['assets/ui-kit/kit.css','proposal-theme.css','style.css','presentation-demo.css','scenario-visuals.css','workspace.css','e-reyting-theme.css','proposal-pages.css','sales.css','sales-visuals.css','editorial.css'];
+const files = ['assets/ui-kit/kit.css','proposal-theme.css','style.css','presentation-demo.css','scenario-visuals.css','workspace.css','e-reyting-theme.css','proposal-pages.css','sales.css','sales-visuals.css','editorial.css','motion.css'];
 const parts = [];
 for (const file of files) {
   let css = await readFile(new URL('../'+file, import.meta.url), 'utf8');

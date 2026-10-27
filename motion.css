@@ -1,0 +1,28 @@
+:root { --motion-ease:cubic-bezier(.22,1,.36,1); }
+.navigation { position:relative; isolation:isolate; }
+.motion-nav-marker { position:absolute; left:0; bottom:4px; height:2px; border-radius:2px; background:var(--rd-accent); pointer-events:none; transition:transform 260ms var(--motion-ease),width 260ms var(--motion-ease); }
+.motion-reading-progress { position:absolute; left:20px; right:20px; bottom:0; height:2px; background:var(--rd-accent); transform-origin:left; pointer-events:none; border-radius:2px; }
+.scenario-frame { animation:none; }
+.scenario-image>.motion-scene-ghost { position:absolute; inset:0; z-index:1; pointer-events:none; object-fit:contain; }
+.scenario-cg-label { z-index:2; }
+.scenario-visual-status { position:relative; overflow:hidden; }
+.scenario-visual-status::after { content:''; position:absolute; inset:auto 0 0; height:3px; background:var(--rd-accent); transform:scaleX(var(--action-progress,0)); transform-origin:left; pointer-events:none; }
+.environment-cases button,.environment-action,.delivery-step-button,.ws-nav-link { transition:background-color 180ms ease-out,border-color 180ms ease-out,box-shadow 180ms ease-out; }
+.environment-cases button[aria-pressed=true] .case-card-thumb img { transform:scale(1.045); }
+.case-card-thumb img { transition:transform 320ms var(--motion-ease); }
+.btn,.text-button,.ws-button,.delivery-step-button { transition:transform 160ms var(--motion-ease),background-color 180ms ease-out,border-color 180ms ease-out,color 180ms ease-out,box-shadow 180ms ease-out; }
+.btn:active,.ws-button:active,.delivery-step-button:active { transform:scale(.98); }
+.btn>.i:last-child,.text-button>.i:last-child,.delivery-card-link>.i { transition:transform 180ms var(--motion-ease); }
+@media(hover:hover) {
+  .btn:hover>.i:last-child,.text-button:hover>.i:last-child,.delivery-step-button:hover .delivery-card-link>.i { transform:translateX(3px); }
+  .sales-environment:hover { box-shadow:0 12px 30px #38221b0d; }
+}
+.sales-environment { transition:box-shadow 240ms var(--motion-ease); }
+.sales-technical>summary .i,.pilot-picker>summary .i { transition:transform 200ms var(--motion-ease); }
+.sales-technical[open]>summary .i,.pilot-picker[open]>summary .i { transform:rotate(45deg); }
+@media(prefers-reduced-motion:reduce) {
+  .motion-nav-marker,.case-card-thumb img,.btn,.text-button,.ws-button,.delivery-step-button,.sales-environment,.environment-cases button,.environment-action,.ws-nav-link { transition:none; }
+  .btn:active,.ws-button:active,.delivery-step-button:active,.environment-cases button[aria-pressed=true] .case-card-thumb img { transform:none; }
+  .btn:hover>.i:last-child,.text-button:hover>.i:last-child,.delivery-step-button:hover .delivery-card-link>.i { transform:none; }
+  .sales-environment:hover img { transform:none; }
+}

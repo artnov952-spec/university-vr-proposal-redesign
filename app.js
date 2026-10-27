@@ -11,8 +11,10 @@ import { PANORAMA_MEDIA } from './panorama/media.js?v=sales20261027-r7local';
 import { renderClassroomPlan } from './classroom-plan.js?v=sales20261027-r7local';
 import { mountSalesHero } from './sales-hero.js?v=sales20261027-r7local';
 import { PILOT_CASES, DEFAULT_PILOT_CASE, pilotPlan, renderPilotPlan } from './pilot-plan.js?v=sales20261027-r7local';
+import { createProposalMotion } from './motion.js';
 
 const $ = id => document.getElementById(id);
+const motion = createProposalMotion();
 const t = (ru, uz) => getLanguage() === 'uz' ? uz : ru;
 const content = () => proposalContent(getLanguage());
 const view = {scene:'courtyard',stage:0,role:'teacher',zone:'intro',seat:null,architecture:'teacher',preview:'prepare',exchange:'api'};
@@ -22,6 +24,7 @@ const roomChecks = new Set();
 let deliveryStep=0;
 let heroController, expandedEnvironment=null, pilotCase=DEFAULT_PILOT_CASE;
 function selectDelivery(index) {
+  const changed = deliveryStep !== index;
   const copy=[
     [t('Результат: согласован план занятий','Natija: mashg‘ulot rejasi kelishildi'),t('Университет и разработчик согласуют 20 ситуаций, действия курсанта и критерии проверки.','Universitet va ishlab chiquvchi 20 vaziyat, kursant amallari va tekshirish mezonlarini kelishadi.')],
     [t('Результат: проверен один полный пример','Natija: bitta to‘liq namuna tekshirildi'),t('На выбранном оборудовании проходят путь от запуска упражнения до разбора. Проверяют графику, управление и удобство.','Tanlangan jihozda mashqni boshlashdan tahlilgacha sinab ko‘riladi. Grafika, boshqaruv va qulaylik tekshiriladi.')],
@@ -31,10 +34,13 @@ function selectDelivery(index) {
   if(!copy[index]||!$('delivery-output'))return;
   deliveryStep=index;document.querySelectorAll('[data-delivery]').forEach(button=>button.setAttribute('aria-pressed',String(Number(button.dataset.delivery)===index)));
   $('delivery-output').innerHTML=`<strong>${copy[index][0]}</strong><p>${copy[index][1]}</p>`;
+  if (changed) motion.panel($('delivery-output'),true);
 }
-function renderEnvironment(id) {
+function renderEnvironment(id, action) {
   const target = $('environment-content-'+id);
-  if (target) target.innerHTML = renderEnvironmentExample(id,environmentExamples[id],getLanguage(),{showNotes:false});
+  if (!target) return;
+  const replace = () => { target.innerHTML = renderEnvironmentExample(id,environmentExamples[id],getLanguage(),{showNotes:false}); };
+  if (typeof action === 'string') motion.environment(target,replace,action); else replace();
 }
 function renderEnvironmentDialog() {
   if (!expandedEnvironment) return;
@@ -98,6 +104,7 @@ function showDialog(id) {
   const dialog = $(id);
   if (!dialog.open) { returnFocus.set(dialog, document.activeElement); dialog.showModal(); }
   syncDialogLock();
+  motion.openDialog(dialog);
 }
 function openModule(id) {
   const requested = Number(id);
@@ -181,6 +188,7 @@ function renderSceneCases() {
 function selectStage(index) {
   const stages = content().stages;
   if (!Number.isInteger(index) || !stages[index]) return;
+  const changed = view.stage !== index;
   view.stage = index;
   markTabs('[role="tab"][data-process-stage]', 'processStage', index);
   const stage = stages[index];
@@ -188,14 +196,17 @@ function selectStage(index) {
   $('process-content').innerHTML = `<div class="stage-heading"><span class="stage-number">${t('Этап','Bosqich')} ${index+1} / ${stages.length}</span><span class="badge badge--soft">${t('Экран и действия','Ekran va amallar')}</span></div><h3>${stage[0]}</h3><p>${stage[1]}</p>${renderPresentationDemo({stage:index,state:presentationDemo,language:getLanguage()})}<div class="stage-outcome"><b>${t('Результат этапа','Bosqich natijasi')}</b>${stage[2]}</div><div class="stage-navigation"><button type="button" class="btn btn--soft" data-process-stage="${index-1}" ${index===0?'disabled':''}>${icon('chevrons-left')}${t('Назад','Orqaga')}</button><button type="button" class="btn btn--soft" data-process-stage="${index===stages.length-1?0:index+1}">${index===stages.length-1?t('К первому этапу','Birinchi bosqichga'):t('Следующий этап','Keyingi bosqich')}${icon('arrow-right')}</button></div>`;
   const selectedCase=scenarioLibrary.find(item=>item.id===presentationDemo.caseId);
   if(selectedCase) $('process-content').querySelector('.stage-heading').insertAdjacentHTML('afterend',`<p class="selected-exercise">${icon('book-open')}${escape(getLanguage()==='uz'?selectedCase.uzTitle:selectedCase.title)}</p>`);
+  if (changed) motion.panel($('process-content'),true);
 }
 function selectRole(id) {
   const role = content().roles[id];
   if (!role) return;
+  const changed = view.role !== id;
   view.role = id;
   markTabs('[data-role]', 'role', id);
   $('role-panel').setAttribute('aria-labelledby','role-'+id);
   $('role-panel').innerHTML = `<div><h3>${role[1]}</h3><p>${role[2]}</p></div><ul>${role[3].map(item=>`<li>${item}</li>`).join('')}</ul>`;
+  if (changed) motion.panel($('role-panel'),true);
 }
 function selectZone(id, seat, interactive = false) {
   const zone = content().zones[id];
@@ -211,10 +222,12 @@ function selectZone(id, seat, interactive = false) {
     $('classroom-detail').insertAdjacentHTML('beforeend',`<div class="room-checks"><h4>${t('Проверка перед занятием / пример','Mashg‘ulotdan oldingi tekshiruv / namuna')}</h4>${checks[id].map((text,index)=>`<button type="button" data-room-check="${id}-${seat||'all'}-${index}" aria-pressed="${roomChecks.has(id+'-'+(seat||'all')+'-'+index)}">${icon(roomChecks.has(id+'-'+(seat||'all')+'-'+index)?'circle-check':'minus')}${text}</button>`).join('')}<small>${t('Отметки только для примера, оборудование не подключено.','Belgilar faqat namuna uchun, jihozlar ulanmagan.')}</small></div>`);
   }
   if (interactive && matchMedia('(max-width:760px)').matches) $('classroom-detail').scrollIntoView({block:'nearest',behavior:'auto'});
+  if (interactive) motion.panel($('classroom-detail'),true);
 }
 function selectArchitecture(id) {
   const item = content().architecture[id];
   if (!item) return;
+  const changed = view.architecture !== id;
   view.architecture = id;
   document.querySelectorAll('[data-arch]').forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.arch===id)));
   const routes = {
@@ -225,6 +238,7 @@ function selectArchitecture(id) {
     exchange:[t('Выберите учебную запись для пакета.','Paket uchun o‘quv yozuvini tanlang.'),t('Проверка не пропустит неподтвержденный результат.','Tekshiruv tasdiqlanmagan natijani o‘tkazmaydi.'),t('После разбора подготовьте локальный пакет.','Tahlildan keyin mahalliy paket tayyorlang.')]
   };
   $('architecture-detail').innerHTML = `<div class="architecture-detail-heading"><div><p class="eyebrow">${t('Выбранный компонент','Tanlangan komponent')}</p><h3>${item[0]}</h3><p>${item[2]}</p></div></div><div class="architecture-demo">${renderPresentationDemo({component:id,state:presentationDemo,language:getLanguage(),scope:'architecture'})}<div class="architecture-context"><h4>${t('Попробуйте в этом экране','Shu ekranda sinab ko‘ring')}</h4><ol>${routes[id].map(text=>`<li>${text}</li>`).join('')}</ol></div></div>`;
+  if (changed) motion.panel($('architecture-detail'),true);
 }
 
 function handlePresentationAction(target, value) {
@@ -253,6 +267,7 @@ function handlePresentationAction(target, value) {
   const nextFocus = document.querySelector(focusSelector);
   if (nextFocus && !nextFocus.disabled) nextFocus.focus({preventScroll:true});
   else document.querySelector(`.demo-screen[data-demo-scope="${CSS.escape(scope)}"] button:not(:disabled)`)?.focus({preventScroll:true});
+  motion.panel(document.querySelector(`.demo-screen[data-demo-scope="${CSS.escape(scope)}"] .demo-screen-body`));
 }
 function syncScenarioPreview() {
   prefetchScenarioFrame(presentationDemo);
@@ -262,6 +277,7 @@ function syncScenarioPreview() {
 function selectPreview(id) {
   if (!$('program-panel')) return;
   if (!['prepare','practice','result'].includes(id)) return;
+  const changed = view.preview !== id;
   view.preview = id;
   const state = workspace?.getState();
   const scenario = state?.scenarios.find(item=>item.id===state.assignment.scenarioId);
@@ -275,9 +291,11 @@ function selectPreview(id) {
   const data = variants[id];
   $('program-panel').setAttribute('aria-labelledby','preview-'+id);
   $('program-panel').innerHTML = `<div class="preview-body"><div class="preview-copy"><span class="badge badge--soft">${t('Пример работы','Ishlash namunasi')}</span><h3>${data.title}</h3><p>${data.text}</p></div>${renderPresentationDemo({stage:{prepare:1,practice:4,result:6}[id],state:presentationDemo,language:getLanguage(),scope:'preview'})}</div>`;
+  if (changed) motion.panel($('program-panel'));
 }
 function selectExchange(id) {
   if (!['api','file'].includes(id)) return;
+  const changed = view.exchange !== id;
   view.exchange = id;
   markTabs('[data-exchange]', 'exchange', id);
   $('exchange-detail').setAttribute('aria-labelledby','exchange-'+id);
@@ -285,6 +303,7 @@ function selectExchange(id) {
     ? [t('Проверка идентификаторов и подтверждения.','Identifikatorlar va tasdiqni tekshirish.'),t('Формирование согласованного пакета.','Kelishilgan paketni shakllantirish.'),t('Регистрация ответа и ошибок без повторной оценки.','Javob va xatolarni qayta baholamasdan qayd etish.')]
     : [t('Выбор подтвержденных попыток.','Tasdiqlangan urinishlarni tanlash.'),t('Проверка полей и состава файла.','Maydonlar va fayl tarkibini tekshirish.'),t('Подготовка файла и отдельный контроль импорта.','Faylni tayyorlash va importni alohida nazorat qilish.')];
   $('exchange-detail').innerHTML = `<h3>${id==='api'?t('Автоматический обмен','Avtomatik almashuv'):t('Обмен по утвержденному файлу','Tasdiqlangan fayl orqali almashuv')}</h3><ol>${steps.map(item=>`<li>${item}</li>`).join('')}</ol><p>${id==='api'?t('Проектируемый маршрут после подключения согласованного API.','Kelishilgan API ulangandan keyingi loyihaviy yo‘l.'):t('Резервный вариант при отсутствии прямого API. Скачивание файла не равно успешному импорту.','To‘g‘ridan-to‘g‘ri API bo‘lmagandagi zaxira yo‘l. Faylni yuklab olish muvaffaqiyatli import degani emas.')}</p>`;
+  if (changed) motion.panel($('exchange-detail'),true);
 }
 function renderDialogCopy() {
   $('system-label').textContent = t('Демонстрация / локальные учебные данные','Namoyish / mahalliy o‘quv ma’lumotlari');
@@ -310,7 +329,7 @@ function render() {
   const prerendered = $('proposal').dataset.initialLanguage === getLanguage();
   delete $('proposal').dataset.initialLanguage;
   if (!prerendered) $('proposal').innerHTML = renderProposal(getLanguage());
-  heroController=mountSalesHero($('hero-scene'),getLanguage());
+  heroController=mountSalesHero($('hero-scene'),getLanguage(),{onFrameChange:()=>motion.panel($('hero-film-caption'))});
   heroController?.setSuspended('dialog',Boolean(document.querySelector('dialog[open]')));
   renderRoomDialog();renderEnvironmentDialog();renderPilot();
   if ($('scene-preview')) {
@@ -338,9 +357,10 @@ function render() {
   headerObserver.observe(document.querySelector('.header'));
   window.dispatchEvent(new Event('university-ui-ready'));
   document.querySelectorAll('iframe').forEach(frame=>frame.contentWindow?.postMessage({type:'university-panorama:language',language:getLanguage()},location.origin));
+  motion.mountProposal($('proposal'));
 }
 render();
-workspace = mountWorkspace(systemRoot,{onOpenScene:openScene,onStateChange:updateSummary});
+workspace = mountWorkspace(systemRoot,{onOpenScene:openScene,onStateChange:updateSummary,onRender:(frame,id)=>motion.workspace(frame,id)});
 updateSummary(workspace.getState()); selectPreview(view.preview);
 const dialogHeaderObserver = new ResizeObserver(entries=>{
   const height = entries[0].target.getBoundingClientRect().height;
@@ -377,7 +397,7 @@ document.addEventListener('click', event=>{
       revealTechnical('process-content');return;
     }
     environmentExamples[id]=reduceEnvironmentExample(environmentExamples[id],{type:action,value:target.dataset.envValue,index:Number(target.dataset.envIndex)});
-    renderEnvironment(id);
+    renderEnvironment(id,action);
     const focus=action==='point'?`[data-env-action="point"][data-env-index="${environmentExamples[id].points.length}"]`:`[data-env-action="${action}"]${action==='case'?`[data-env-value="${target.dataset.envValue}"]`:''}`;
     ($('environment-content-'+id).querySelector(focus)||$('environment-content-'+id).querySelector('[data-env-action="review"]'))?.focus({preventScroll:true});
   }
@@ -386,7 +406,7 @@ document.addEventListener('click', event=>{
   else if (target.dataset.inlineStage !== undefined) {selectStage(Number(target.dataset.inlineStage));revealTechnical('process-content');}
   else if (target.dataset.inlineComponent) {selectArchitecture(target.dataset.inlineComponent);revealTechnical('architecture-detail');}
   else if (target.dataset.openScene) openScene(target.dataset.openScene,environmentExamples[target.dataset.env] || presentationDemo);
-  else if (target.dataset.closeDialog) $(target.dataset.closeDialog).close();
+  else if (target.dataset.closeDialog) motion.closeDialog($(target.dataset.closeDialog));
   else if (target.dataset.sceneTab) selectScene(target.dataset.sceneTab);
   else if (target.dataset.processStage !== undefined) selectStage(Number(target.dataset.processStage));
   else if (target.dataset.role) selectRole(target.dataset.role);
@@ -416,6 +436,7 @@ document.addEventListener('change',event=>{
   if(event.target.matches('[data-demo-case]'))handlePresentationAction(event.target,event.target.value);
 });
 document.querySelectorAll('dialog').forEach(dialog=>{
+  dialog.addEventListener('cancel',event=>{if(!event.defaultPrevented){event.preventDefault();motion.closeDialog(dialog);}});
   dialog.addEventListener('close',()=>{
     if (dialog.id==='system-dialog') { $('workspace-slot').append(systemRoot); selectPreview(view.preview);if(location.hash==='#demo')history.replaceState(null,'',location.pathname+location.search+(demoReturnHash||'#workflow')); }
     if (dialog.id==='scene-dialog') $('scene-frame-slot').replaceChildren();
@@ -451,8 +472,4 @@ const initialAnchor = document.getElementById(location.hash.slice(1));
 if (location.hash==='#demo') openModule(1);
 else if (initialAnchor) revealTechnical(initialAnchor.id);
 window.addEventListener('hashchange',()=>{if(location.hash==='#demo')openModule(1);else if($('system-dialog').open)$('system-dialog').close();});
-const revealObserver=new IntersectionObserver(entries=>entries.forEach(entry=>{
-  if(entry.isIntersecting){entry.target.classList.add('is-revealed');revealObserver.unobserve(entry.target);}
-}),{threshold:.1});
-document.querySelectorAll('.slide').forEach(section=>revealObserver.observe(section));
-window.addEventListener('pagehide',()=>{revealObserver.disconnect();heroController?.dispose();},{once:true});
+window.addEventListener('pagehide',()=>{motion.destroy();heroController?.dispose();},{once:true});

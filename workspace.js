@@ -1110,6 +1110,7 @@ export function mountWorkspace(root, options = {}) {
       target.focus({ preventScroll: true });
       if (position && ['text', 'search', 'textarea'].includes(target.type)) target.setSelectionRange(...position);
     }
+    options.onRender?.(frame,current.id);
   }
 
   let localDialog = null;
