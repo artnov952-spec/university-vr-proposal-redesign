@@ -26,7 +26,7 @@ export function renderProposal(language) {
   <a class="skip-link" href="#purpose">${t('К предложению','Taklifga o‘tish')}</a>
   <header class="header wrap sales-header">
     <div class="header-top">
-      <a class="identity" href="#purpose"><img src="./assets/university-logo.png" width="44" height="44" alt="${t('Эмблема университета','Universitet gerbi')}"><span>${t('Университет общественной безопасности','Jamoat xavfsizligi universiteti')}<small>${t('Республика Узбекистан','O‘zbekiston Respublikasi')}</small></span></a>
+      <a class="identity" href="#purpose"><img src="./assets/university-logo.webp" width="44" height="44" alt="${t('Эмблема университета','Universitet gerbi')}"><span>${t('Университет общественной безопасности','Jamoat xavfsizligi universiteti')}<small>${t('Республика Узбекистан','O‘zbekiston Respublikasi')}</small></span></a>
       <div class="header-actions"><div class="language-switch" role="group" aria-label="${t('Язык предложения и программы','Taklif va dastur tili')}">${['ru','uz'].map(value => `<button type="button" data-language="${value}" aria-pressed="${value===language}" aria-label="${value==='ru'?t('Русский язык','Rus tili'):t('Узбекский язык','O‘zbek tili')}">${value.toUpperCase()}</button>`).join('')}</div><a class="btn btn--primary demo-entry" id="expand-workspace" href="#demo">${icon('monitor')}${t('Демо программы','Dastur demosi')}</a></div>
     </div>
     <nav class="navigation" aria-label="${t('Разделы предложения','Taklif bo‘limlari')}">${SALES_SECTIONS.map((id,index)=>`<a href="#${id}">${nav[index]}</a>`).join('')}</nav>

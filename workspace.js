@@ -1081,7 +1081,7 @@ export function mountWorkspace(root, options = {}) {
     frame.dataset.density = state.preferences.density;
     frame.replaceChildren(element('div', { class: 'ws-shell' },
       element('aside', { class: 'ws-sidebar', 'aria-label': t('Модули рабочего пространства'), 'data-scroll': 'sidebar' },
-        element('div', { class: 'ws-brand' }, element('img', { class:'ws-client-logo',src:'./assets/university-logo.png',width:56,height:56,alt:state.language==='uz'?'Universitet gerbi':'Эмблема университета' }), element('span', { class: 'ws-kicker' }, 'УНИВЕРСИТЕТ / VR'), element('strong', {}, t('Учебное пространство')), p('Только на этом устройстве')),
+        element('div', { class: 'ws-brand' }, element('img', { class:'ws-client-logo',src:'./assets/university-logo.webp',width:56,height:56,alt:state.language==='uz'?'Universitet gerbi':'Эмблема университета' }), element('span', { class: 'ws-kicker' }, 'УНИВЕРСИТЕТ / VR'), element('strong', {}, t('Учебное пространство')), p('Только на этом устройстве')),
         element('div', { class: 'ws-mobile-nav' }, field('Модуль', select('module', 'id', current.id, WORKSPACE_GROUPS.flatMap(group => group.ids).map(id => [id, moduleLabel(sourceModules.find(item => item.id === id))]), { 'aria-label': t('Выбрать модуль') }))),
         element('nav', { class: 'ws-desktop-nav', 'aria-label': t('Модули рабочего пространства') }, WORKSPACE_GROUPS.map(group => element('section', { class: 'ws-nav-group' }, element('h3', {}, t(group.title)), group.ids.map(id => {
           const node = button('', 'navigate', { class: `ws-nav-link ${current.id === id ? 'is-active' : ''}`, 'data-module': id, 'aria-current': current.id === id ? 'page' : false });
