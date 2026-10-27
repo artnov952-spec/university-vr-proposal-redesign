@@ -48,7 +48,7 @@ export function mountSalesHero(root, language = 'ru', options = {}) {
       lastCaption = captionKey;
     }
     find('hero-play').setAttribute('aria-pressed', String(playing));
-    const playText = media.matches ? t('Следующий кадр', 'Keyingi kadr') : playing ? t('Приостановить', 'To‘xtatish') : frame.complete ? t('Смотреть еще раз', 'Yana ko‘rish') : started ? t('Продолжить показ', 'Namoyishni davom ettirish') : t('Смотреть 10 секунд', '10 soniya ko‘rish');
+    const playText = media.matches ? t('Следующий кадр', 'Keyingi kadr') : playing && !ready ? t('Загружаем сцену…', 'Sahna yuklanmoqda…') : playing ? t('Приостановить', 'To‘xtatish') : frame.complete ? t('Смотреть еще раз', 'Yana ko‘rish') : started ? t('Продолжить показ', 'Namoyishni davom ettirish') : t('Смотреть 10 секунд', '10 soniya ko‘rish');
     const playLabel = find('hero-play').querySelector('span');
     if (playLabel.textContent !== playText) playLabel.textContent = playText;
   }
@@ -72,10 +72,10 @@ export function mountSalesHero(root, language = 'ru', options = {}) {
   function preload() {
     if (loading) return loading;
     loading = Promise.all(frames.map(frame => new Promise((resolve, reject) => {
-      const image = new Image(); image.decoding = 'async'; image.fetchPriority = 'low';
+      const image = new Image(); image.decoding = 'async'; image.fetchPriority = 'auto';
       const finish = error => { clearTimeout(timeout); image.onload = image.onerror = null; listener.signal.removeEventListener('abort', abort); error ? reject(error) : resolve(image); };
       const abort = () => { image.removeAttribute('src'); finish(new DOMException('Aborted', 'AbortError')); };
-      const timeout = setTimeout(() => finish(new Error('Preview image timeout')), 15000);
+      const timeout = setTimeout(() => finish(new Error('Preview image timeout')), 30000);
       image.onload = () => finish(); image.onerror = () => finish(new Error('Preview image unavailable'));
       listener.signal.addEventListener('abort', abort, { once: true });
       image.src = new URL(frame.src, import.meta.url).href;
